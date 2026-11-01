@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanguard Strategy Advisory | Executive Positioning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #191c1e;
+      --muted: #44474d;
+      --brand: #005eb5;
+      --bg: #f7f9fc;
+      --panel: #f2f4f7;
+      --line: #eceef1;
+      --line-strong: rgba(197, 198, 205, 0.4);
+      --mint: #d0e8dd;
+      --deep: #0a1f19;
+      --white: #ffffff;
+      --shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 80px; }
+    .mono { font-family: 'Liberation Mono', 'Courier New', monospace; }
+
+    /* ---------- Top nav ---------- */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(247, 249, 252, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 36px; height: 36px; border-radius: 8px; background: var(--ink); color: #fff;
+      display: grid; place-items: center; font-weight: 800; font-size: 18px;
+    }
+    .brand-text { font-weight: 800; font-size: 14px; letter-spacing: 0.5px; line-height: 1.2; }
+    .brand-text small { display: block; font-weight: 600; font-size: 11px; color: var(--muted); letter-spacing: 1.5px; }
+    .nav-links { display: flex; gap: 28px; font-size: 13px; font-weight: 600; color: var(--muted); }
+    .nav-links a:hover { color: var(--brand); }
+    .btn-primary {
+      background: var(--brand); color: #fff; padding: 12px 22px; border-radius: 8px;
+      font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 6px 18px rgba(0, 94, 181, 0.22); transition: transform .15s, box-shadow .15s;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0, 94, 181, 0.3); }
+    .btn-ghost {
+      border: 1px solid var(--line-strong); background: #fff; color: var(--ink);
+      padding: 12px 22px; border-radius: 8px; font-weight: 700; font-size: 14px;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; overflow: hidden; padding: 96px 0 96px; }
+    .hero::before, .hero::after {
+      content: ''; position: absolute; border-radius: 9999px; pointer-events: none;
+    }
+    .hero::before {
+      width: 580px; height: 580px; right: -160px; top: -80px;
+      background: rgba(214, 227, 255, 0.3); filter: blur(120px);
+    }
+    .hero::after {
+      width: 420px; height: 420px; left: 25%; bottom: -128px;
+      background: rgba(208, 232, 221, 0.2); filter: blur(100px);
+    }
+    .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center; }
+
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; border: 1px solid var(--line-strong); border-radius: 4px;
+      padding: 5px 13px; box-shadow: var(--shadow);
+      font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink);
+    }
+    .pill .dot { width: 8px; height: 8px; border-radius: 9999px; background: var(--brand); }
+
+    .hero h1 {
+      font-size: 56px; line-height: 1.08; font-weight: 800; letter-spacing: -1.4px;
+      margin: 26px 0 22px;
+    }
+    .hero h1 .accent { color: var(--brand); }
+    .hero p.lead { font-size: 16px; color: var(--muted); max-width: 560px; }
+    .hero-ctas { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+    .hero-badges { display: flex; gap: 10px; margin-top: 30px; flex-wrap: wrap; }
+    .badge {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); background: rgba(255,255,255,0.7); border: 1px solid var(--line-strong);
+      padding: 6px 10px; border-radius: 4px;
+    }
+
+    /* Feed card (hero visual) */
+    .feed {
+      background: #fff; border-radius: var(--radius); box-shadow: 0 18px 40px rgba(10, 25, 47, 0.12);
+      border: 1px solid var(--line-strong); padding: 22px; position: relative;
+    }
+    .feed-head { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 9999px; background: var(--ink); color: #fff;
+      display: grid; place-items: center; font-weight: 800; font-size: 15px;
+    }
+    .feed-name { font-weight: 800; font-size: 15px; }
+    .feed-title { font-size: 12px; color: var(--muted); }
+    .verified {
+      margin-left: auto; font-size: 10px; font-weight: 800; letter-spacing: 1px;
+      color: #0a6b43; background: var(--mint); padding: 4px 8px; border-radius: 4px;
+    }
+    .feed-post { margin-top: 16px; font-size: 14px; color: var(--ink); }
+    .feed-post .time { font-size: 11px; color: var(--muted); display: block; margin-bottom: 6px; }
+    .feed-stats { display: flex; gap: 16px; margin-top: 14px; font-size: 12px; color: var(--muted); font-weight: 600; }
+    .feed-stats b { color: var(--ink); }
+    .feed-footer {
+      margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .mini { background: var(--panel); border-radius: 8px; padding: 12px; }
+    .mini .k { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+    .mini .v { font-size: 20px; font-weight: 800; margin-top: 4px; }
+    .mini .v.green { color: #0a6b43; }
+    .tag {
+      position: absolute; top: -14px; right: 20px; background: var(--deep); color: #fff;
+      font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 6px 10px; border-radius: 4px;
+    }
+
+    /* ---------- Sections ---------- */
+    section.block { padding: 96px 0; }
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
+      border-bottom: 1px solid rgba(197, 198, 205, 0.3); padding-bottom: 9px; margin-bottom: 40px;
+    }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--brand); }
+    .section-head h2 { font-size: 40px; line-height: 1.15; font-weight: 800; letter-spacing: -0.8px; margin-top: 8px; }
+    .section-head p { color: var(--muted); max-width: 420px; font-size: 15px; }
+
+    /* Metrics */
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .card {
+      background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+      border: 1px solid var(--line-strong); padding: 24px;
+    }
+    .metric .eyebrow { color: var(--muted); font-size: 10px; }
+    .metric .num { font-size: 40px; font-weight: 800; letter-spacing: -1px; margin: 12px 0 6px; }
+    .metric h3 { font-size: 16px; font-weight: 700; }
+    .metric p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    /* Positioning split */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .split h2 { font-size: 40px; line-height: 1.15; font-weight: 800; letter-spacing: -0.8px; margin: 10px 0 18px; }
+    .split p { color: var(--muted); font-size: 15px; }
+    .panel { background: #fff; border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); border: 1px solid var(--line-strong); }
+    .panel-row { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .panel-row:last-child { border-bottom: none; }
+    .panel-row strong { font-weight: 700; }
+    .panel-row span { color: var(--muted); }
+    .bar { height: 8px; background: var(--panel); border-radius: 9999px; overflow: hidden; margin-top: 8px; }
+    .bar > i { display: block; height: 100%; background: var(--brand); border-radius: 9999px; }
+
+    /* Pillars */
+    .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .pillar { padding: 32px; display: flex; flex-direction: column; gap: 14px; }
+    .pillar .pno { font-size: 11px; font-weight: 800; letter-spacing: 1.4px; color: var(--brand); }
+    .pillar h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.2px; line-height: 1.25; }
+    .pillar h4 { font-size: 13px; font-weight: 700; color: var(--ink); }
+    .pillar p { font-size: 14px; color: var(--muted); }
+    .pillar .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+    .pillar .tags span {
+      font-size: 11px; font-weight: 700; background: var(--panel); color: var(--muted);
+      padding: 5px 9px; border-radius: 4px;
+    }
+
+    /* Diagnostic / Form section */
+    .diagnostic { background: var(--deep); color: #fff; }
+    .diagnostic .section-head { border-bottom-color: rgba(255,255,255,0.14); }
+    .diagnostic .eyebrow { color: #8fd3b0; }
+    .diagnostic .section-head h2 { color: #fff; }
+    .diagnostic .section-head p { color: rgba(255,255,255,0.7); }
+    .diag-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: start; }
+    .diag-copy h2 { font-size: 44px; line-height: 1.1; font-weight: 800; letter-spacing: -1px; margin: 12px 0 18px; }
+    .diag-copy > p { color: rgba(255,255,255,0.72); font-size: 15px; max-width: 520px; }
+    .checks { list-style: none; margin-top: 28px; display: grid; gap: 18px; }
+    .checks li { display: flex; gap: 14px; }
+    .checks .ic {
+      flex: 0 0 34px; height: 34px; border-radius: 8px; background: rgba(143, 211, 176, 0.14);
+      color: #8fd3b0; display: grid; place-items: center; font-weight: 800;
+    }
+    .checks h4 { font-size: 15px; font-weight: 700; }
+    .checks p { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+
+    .offer {
+      margin-top: 30px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: var(--radius); padding: 22px; display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center;
+    }
+    .offer .price { font-size: 44px; font-weight: 800; color: #8fd3b0; line-height: 1; }
+    .offer h4 { font-size: 16px; font-weight: 700; }
+    .offer p { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+    .offer .limited { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 1px; background: #8fd3b0; color: var(--deep); padding: 3px 7px; border-radius: 4px; margin-bottom: 6px; }
+
+    .form-card {
+      background: #fff; color: var(--ink); border-radius: 16px; padding: 36px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); position: relative;
+    }
+    .form-card .eyebrow { color: var(--brand); }
+    .form-card h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin: 8px 0 6px; }
+    .form-card .sub { font-size: 14px; color: var(--muted); margin-bottom: 26px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .field label { font-size: 13px; font-weight: 700; letter-spacing: 0.26px; }
+    .field input {
+      font: inherit; font-size: 14px; color: var(--ink);
+      border: 1px solid var(--line-strong); background: var(--bg); border-radius: 8px;
+      padding: 13px 14px; outline: none; transition: border-color .15s, box-shadow .15s;
+    }
+    .field input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0, 94, 181, 0.15); background: #fff; }
+    .field input::placeholder { color: rgba(68, 71, 77, 0.5); }
+    .submit {
+      width: 100%; margin-top: 8px; background: var(--brand); color: #fff; border-radius: 8px;
+      padding: 15px; font-weight: 800; font-size: 15px; box-shadow: 0 8px 20px rgba(0, 94, 181, 0.25);
+      transition: transform .15s, opacity .15s;
+    }
+    .submit:hover { transform: translateY(-1px); }
+    .submit:disabled { opacity: .6; cursor: wait; transform: none; }
+    .fine { font-size: 11px; color: var(--muted); text-align: center; margin-top: 14px; letter-spacing: 0.3px; }
+    .status { margin-top: 14px; font-size: 14px; font-weight: 700; text-align: center; min-height: 20px; }
+    .status.ok { color: #0a6b43; }
+    .status.err { color: #b3261e; }
+
+    /* FAQ */
+    .faq { display: grid; gap: 14px; max-width: 880px; margin: 0 auto; }
+    .faq-item { padding: 0; overflow: hidden; }
+    .faq-q {
+      width: 100%; text-align: left; padding: 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+      font-size: 18px; font-weight: 700; letter-spacing: -0.2px; color: var(--ink);
+    }
+    .faq-q .plus { font-size: 22px; color: var(--brand); transition: transform .2s; }
+    .faq-item.open .plus { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 24px 24px; color: var(--muted); font-size: 15px; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Methodology strip */
+    .method {
+      background: #fff; border: 1px solid var(--line-strong); border-radius: var(--radius);
+      padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+    }
+    .method h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin-top: 8px; }
+    .method p { color: var(--muted); font-size: 15px; }
+    .steps-line { display: flex; gap: 10px; flex-wrap: wrap; }
+    .steps-line span {
+      font-size: 12px; font-weight: 700; background: var(--panel); padding: 8px 12px; border-radius: 6px; color: var(--ink);
+    }
+
+    /* Footer */
+    footer { background: var(--ink); color: rgba(255,255,255,0.75); padding: 64px 0 36px; }
+    .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
+    .foot-grid h5 { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: #fff; margin-bottom: 14px; }
+    .foot-grid a, .foot-grid p { font-size: 14px; display: block; margin-bottom: 10px; }
+    .foot-grid a:hover { color: #fff; }
+    .foot-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .foot-brand .brand-mark { background: #fff; color: var(--ink); }
+    .foot-brand .brand-text { color: #fff; }
+    .foot-bottom {
+      margin-top: 48px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.12);
+      display: flex; justify-content: space-between; gap: 20px; font-size: 12px; flex-wrap: wrap;
+    }
+    .stamp { font-size: 11px; letter-spacing: 1px; color: #8fd3b0; font-weight: 700; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .wrap { padding: 0 40px; }
+      .hero .wrap, .split, .diag-grid, .method { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .pillars { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 46px; }
+    }
+    @media (max-width: 720px) {
+      .wrap { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 64px 0; }
+      .hero h1 { font-size: 36px; }
+      section.block { padding: 64px 0; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+      .section-head h2, .split h2, .diag-copy h2 { font-size: 30px; }
+      .grid-4 { grid-template-columns: 1fr; }
+      .offer { grid-template-columns: 1fr; }
+      .form-card { padding: 24px; }
+      .foot-grid { grid-template-columns: 1fr; }
+      .faq-q { font-size: 16px; padding: 18px; }
+      .method { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">
+        <div class="brand-mark">V</div>
+        <div class="brand-text">VANGUARD<small>STRATEGY ADVISORY</small></div>
+      </div>
+      <nav class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#pillars">Advisory Pillars</a>
+        <a href="#proof">Executive Proof</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#diagnostic">Executive Diagnostic</a>
+        <a href="#faq">Advisory Protocols</a>
+      </nav>
+      <a class="btn-primary" href="#diagnostic">Request Diagnostic</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="overview">
+    <div class="wrap">
+      <div>
+        <span class="pill"><span class="dot"></span>Confidential Executive Positioning</span>
+        <h1>From Invisible to <span class="accent">In-Executive Eminence</span></h1>
+        <p class="lead">
+          You have built enterprise credibility offline. Now, crystallize it where institutional investors, prospective clients, and top-tier talent congregate. Vanguard orchestrates confidential, high-signal LinkedIn narratives for elite operators, commanding industry authority without generic ghostwriting clichés.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn-primary" href="#diagnostic">Initiate Strategic Advisory</a>
+          <a class="btn-ghost" href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener">Book ₹1 Executive Teardown</a>
+        </div>
+        <div class="hero-badges">
+          <span class="badge">Strict NDA Protection</span>
+          <span class="badge">Zero Generic Clichés</span>
+          <span class="badge">Audited Signal Yield</span>
+          <span class="badge">Institutional Profile Benchmark</span>
+        </div>
+      </div>
+
+      <div class="feed" aria-label="Executive profile preview">
+        <span class="tag">VERIFIED LEADER</span>
+        <div class="feed-head">
+          <div class="avatar">AV</div>
+          <div>
+            <div class="feed-name">Alex Vance <span class="mono" style="color:var(--brand);font-size:12px;">• 1st</span></div>
+            <div class="feed-title">Infra | Board Member | Advisor to Fortune 100…</div>
+            <div class="feed-title">Bangalore · 28,400+ Executive Followers</div>
+          </div>
+          <span class="verified">AUDITED</span>
+        </div>
+        <div class="feed-post">
+          <span class="time">EXECUTIVE POINT OF VIEW · 3 days ago</span>
+          surrendered market share. 3 capital allocation missteps enterprise leaders make when addressing public markets.
+        </div>
+        <div class="feed-stats">
+          <span><b>1,840</b> Impressions</span>
+          <span><b>214</b> C-Level Comments</span>
+          <span><b>142</b> Reposts</span>
+        </div>
+        <div class="feed-footer">
+          <div class="mini">
+            <div class="k">C-Suite Profile Trajectory</div>
+            <div class="v green">+342%</div>
+            <div class="feed-title">Inbound Reach</div>
+          </div>
+          <div class="mini">
+            <div class="k">Institutional Target Metric</div>
+            <div class="v">Tier-1</div>
+            <div class="feed-title">High-Net-Worth Alignment · Portfolios</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Executive proof -->
+  <section class="block" id="proof">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Executive Proof</div>
+          <h2>Measurable results for enterprise leaders</h2>
+        </div>
+        <p>Executive presence is not about viral noise. It is measured in qualified LP introductions, premier board inquiries, and sovereign market positioning.</p>
+      </div>
+      <div class="grid-4">
+        <div class="card metric">
+          <div class="eyebrow">Verified Leader</div>
+          <div class="num">45</div>
+          <h3>Guided</h3>
+          <p>Enterprise founders, fund partners, and corporate directors actively counselled.</p>
+        </div>
+        <div class="card metric">
+          <div class="eyebrow">Curated Essays</div>
+          <div class="num">1,200</div>
+          <h3>Strategic POV Publications</h3>
+          <p>High-density essays, technical teardowns, and industry keynote commentaries.</p>
+        </div>
+        <div class="card metric">
+          <div class="eyebrow">Median Uplift</div>
+          <div class="num">380</div>
+          <h3>Target Audience Expansion</h3>
+          <p>Compounded distribution specifically within target enterprise decision-makers.</p>
+        </div>
+        <div class="card metric">
+          <div class="eyebrow">Qualified Inbound</div>
+          <div class="num">$14M</div>
+          <h3>Influenced</h3>
+          <p>Direct institutional inquiries, venture allocations, and strategic corporate alliances.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Positioning -->
+  <section class="block" style="padding-top:0;">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <div class="eyebrow">Discreet Executive Positioning</div>
+          <h2>Preserve Your Precious Time. Elevate Your Eminence.</h2>
+          <p>You invest 45 focused minutes per month. We convert your strategic thinking into authoritative institutional visibility that compounds across quarterly business cycles.</p>
+          <div style="margin-top:28px;">
+            <a class="btn-primary" href="#diagnostic">Request Confidential Review</a>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-row"><strong>Qualified LP introductions</strong><span>Tracked monthly</span></div>
+          <div class="panel-row" style="display:block;">
+            <div style="display:flex;justify-content:space-between;"><strong>Board inquiries</strong><span>Trend</span></div>
+            <div class="bar"><i style="width:72%"></i></div>
+          </div>
+          <div class="panel-row" style="display:block;">
+            <div style="display:flex;justify-content:space-between;"><strong>Market positioning</strong><span>Category leadership</span></div>
+            <div class="bar"><i style="width:88%"></i></div>
+          </div>
+          <div class="panel-row"><strong>Time commitment</strong><span>45 min / month</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advisory operating model -->
+  <section class="block" id="pillars" style="background:#fff;">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">The Advisory Operating Model</div>
+          <h2>Precision Execution. Zero Operational Drag.</h2>
+        </div>
+        <p>A refined 3-stage protocol structured to extract maximum intellectual capital from founders and C-level leaders with absolute time efficiency.</p>
+      </div>
+      <div class="pillars">
+        <div class="card pillar">
+          <div class="pno">PILLAR 01</div>
+          <h3>Persona Mapping</h3>
+          <h4>Key Opinion Leader (KOL) Benchmarking</h4>
+          <p>We map your personal leadership thesis against your corporate objectives, defining precise audience tiers across investors, enterprise clients, and category peers.</p>
+          <div class="tags"><span>Proprietary Executive Narrative Architecture</span></div>
+        </div>
+        <div class="card pillar">
+          <div class="pno">PILLAR 02</div>
+          <h3>High-Signal Narrative Scripting</h3>
+          <h4>High-Retention Analytical Storytelling</h4>
+          <p>Transform spontaneous executive thoughts into authoritative long-form perspectives, data frameworks, and contrarian industry viewpoints calibrated to your voice.</p>
+          <div class="tags"><span>Guardrails</span></div>
+        </div>
+        <div class="card pillar">
+          <div class="pno">PILLAR 03</div>
+          <h3>Distribution Cadence</h3>
+          <h4>Bi-Weekly Executive Signal Telemetry</h4>
+          <p>Seamless distribution workflows, algorithmic timing governance, and proactive engagement oversight so your eminence stays active without draining your calendar.</p>
+          <div class="tags"><span>Algorithmic timing</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diagnostic + Form -->
+  <section class="block diagnostic" id="diagnostic">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Confidential Strategic Inquiry</div>
+          <h2>Request an Executive Diagnostic</h2>
+        </div>
+        <p>Every leader operates under different enterprise stakes. Whether preparing for capital raising, IPO narrative alignment, or market category dominance, we assess your positioning before initiating collaboration.</p>
+      </div>
+
+      <div class="diag-grid">
+        <div class="diag-copy">
+          <div class="eyebrow">Direct Executive Inquiry</div>
+          <p>Strict alignment with corporate governance, legal disclosures, and public relations teams.</p>
+
+          <ul class="checks">
+            <li>
+              <span class="ic">✓</span>
+              <div>
+                <h4>Discreet Executive Alignment</h4>
+                <p>Strict alignment with corporate governance, legal disclosures, and public relations teams.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ic">✓</span>
+              <div>
+                <h4>Uncompromising Voice Authenticity</h4>
+                <p>Zero canned advice or generic platitudes. Every piece represents your intellectual capital.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ic">✓</span>
+              <div>
+                <h4>Audited Inbound Outcomes</h4>
+                <p>Attracting LPs, prospective enterprise deals, and institutional syndicate partners directly.</p>
+              </div>
+            </li>
+          </ul>
+
+          <div class="offer">
+            <div>
+              <span class="limited">LIMITED OFFER</span>
+              <div class="price">₹1</div>
+            </div>
+            <div>
+              <h4>Executive Profile Diagnostic</h4>
+              <p>Receive a confidential, manual teardown of your LinkedIn executive profile with high-impact strategic adjustments dispatched in under 48 hours.</p>
+              <p style="margin-top:8px;">All briefings are backed by mutual Non-Disclosure obligations.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card" id="secure-gateway">
+          <div class="eyebrow">Secure Advisory Gateway</div>
+          <h3>Direct Executive Inquiry</h3>
+          <p class="sub">Complete the advisory intake below. Our Managing Principal reviews each inquiry within 24 hours.</p>
+
+          <form id="advisoryForm" novalidate>
+            <div class="field">
+              <label for="name">Full Name &amp; Executive Title</label>
+              <input id="name" name="name" type="text" placeholder="Rachel Sterling, CEO" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Direct Work Email</label>
+              <input id="email" name="email" type="email" placeholder="rachel@enterprise-ai.com" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="phone">Phone Number</label>
+              <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel" required />
+            </div>
+
+            <button class="submit" id="submitBtn" type="submit">Submit Executive Briefing</button>
+            <div class="status" id="status" role="status" aria-live="polite"></div>
+          </form>
+
+          <p class="fine">Strict Non-Disclosure Protected. No Spam. Zero Third-Party Sharing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="section-head" style="border-bottom:none; justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+        <div>
+          <div class="eyebrow">Advisory Protocols</div>
+          <h2>Frequently Asked Questions</h2>
+        </div>
+        <p>Clear answers about the process, time commitment, and how we preserve your authentic voice.</p>
+      </div>
+
+      <div class="faq">
+        <div class="card faq-item">
+          <button class="faq-q" aria-expanded="false">How much time do I realistically need to invest each week? <span class="plus">+</span></button>
+          <div class="faq-a">Answer to be added.</div>
+        </div>
+        <div class="card faq-item">
+          <button class="faq-q" aria-expanded="false">Will the content still sound like me, or will it feel like generic ghostwriting? <span class="plus">+</span></button>
+          <div class="faq-a">Answer to be added.</div>
+        </div>
+        <div class="card faq-item">
+          <button class="faq-q" aria-expanded="false">What exactly happens in the ₹1 LinkedIn Profile Audit? <span class="plus">+</span></button>
+          <div class="faq-a">Answer to be added.</div>
+        </div>
+        <div class="card faq-item">
+          <button class="faq-q" aria-expanded="false">How quickly do clients see tangible inbound opportunities? <span class="plus">+</span></button>
+          <div class="faq-a">Answer to be added.</div>
+        </div>
+      </div>
+
+      <div class="method" id="methodology" style="margin-top:56px;">
+        <div>
+          <div class="eyebrow">Methodology Compliance</div>
+          <h3>Every advisory mandate operates under strict confidential agreements.</h3>
+        </div>
+        <div>
+          <p>Customized narrative telemetry tracking tangible C-suite upside.</p>
+          <div class="steps-line" style="margin-top:18px;">
+            <span>Persona Mapping</span>
+            <span>High-Signal Narrative Scripting</span>
+            <span>Distribution Cadence</span>
+          </div>
+          <div style="margin-top:22px;">
+            <a class="btn-primary" href="#secure-gateway">Initiate Diagnostic</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <div class="foot-brand">
+            <div class="brand-mark">V</div>
+            <div class="brand-text">VANGUARD<small style="color:rgba(255,255,255,0.6)">STRATEGY ADVISORY</small></div>
+          </div>
+          <p style="font-size:14px;max-width:340px;">Confidential executive positioning, C-suite LinkedIn advisory, and authoritative narrative architectures for enterprise founders, fund partners, and corporate directors.</p>
+          <p class="stamp" style="margin-top:14px;">Tier-1 Confidentiality Standard (ISO-Compliant)</p>
+        </div>
+        <div>
+          <h5>Advisory Index</h5>
+          <a href="#overview">Overview</a>
+          <a href="#pillars">Advisory Pillars</a>
+          <a href="#proof">Executive Proof</a>
+          <a href="#methodology">Methodology</a>
+        </div>
+        <div>
+          <h5>Executive Diagnostic</h5>
+          <a href="#diagnostic">Executive Diagnostic</a>
+          <a href="#faq">Advisory Protocols</a>
+          <a href="#secure-gateway">Initiate Diagnostic</a>
+          <p class="stamp" style="margin-top:6px;">Q2 Cohort: 2 Advisory Slots Available</p>
+        </div>
+        <div>
+          <h5>Private Engagement</h5>
+          <p>Strict non-disclosure protocols upheld across all partner narratives, ghostwriting mandates, and board advisory communications.</p>
+          <a href="#">Confidentiality NDA</a>
+          <a href="#">Terms of Engagement</a>
+          <a href="#">Governance Policy</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2025 Vanguard Strategy Advisory. All rights reserved. LinkedIn is an independent registered trademark of LinkedIn Corporation.</span>
+        <span>Confidentiality · NDA · Governance</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ---- FAQ accordion ----
+    document.querySelectorAll('.faq-q').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const item = btn.closest('.faq-item');
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    });
+
+    // ---- Form submission to Google Sheets (Apps Script) ----
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzX9960DvhvkcOmSKeLgUg8vqZ_08gfg8IaL-Jok_IZvSDaPeF_GquFKWglK1DC-sJm/exec";
+
+    const form = document.getElementById("advisoryForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusEl = document.getElementById("status");
+
+    function showSuccess() {
+      statusEl.className = "status ok";
+      statusEl.textContent = "Thank you. Your briefing has been received.";
+      form.reset();
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Executive Briefing";
+    }
+
+    function showError() {
+      statusEl.className = "status err";
+      statusEl.textContent = "Something went wrong. Please try again.";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Executive Briefing";
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+
+      if (!name || !email || !phone) {
+        statusEl.className = "status err";
+        statusEl.textContent = "Please fill in name, email and phone.";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting…";
+      statusEl.textContent = "";
+
+      const url = SCRIPT_URL + "?" + new URLSearchParams({ name: name, email: email, phone: phone });
+
+      fetch(url, { method: "GET", mode: "no-cors" })
+        .then(() => showSuccess())
+        .catch(() => showError());
+    });
+  </script>
+</body>
+</html>
